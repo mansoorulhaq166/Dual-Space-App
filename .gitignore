@@ -1,0 +1,40 @@
+*.iml
+.gradle/
+.kotlin/
+/local.properties
+local.properties
+.idea/
+.DS_Store
+build/
+/captures
+.externalNativeBuild
+.cxx
+
+# Local-only / not for the public GitHub repo
+FIXES_3.1.8.md
+PRIVATE_ENGINE_SETUP.md
+SEPARATION_VERSION.txt
+gradle-private.properties.example
+local.properties.example
+/scripts/
+/tools/
+/app/private-libs/
+/app/libs/
+/app/src/main/java/com/example/dual/space/engine/
+/app/src/test/java/com/example/dual/space/engine/
+
+# Never commit DualCore source or its binaries
+/blackbox-engine/
+/Bcore/
+/DualCore/
+/dualcore-engine/
+/private-engine/
+**/dualcore-engine*.aar
+**/libdualcore.so
+
+# Signing and private registry credentials
+*.jks
+*.keystore
+keystore.properties
+gradle-private.properties
+.env

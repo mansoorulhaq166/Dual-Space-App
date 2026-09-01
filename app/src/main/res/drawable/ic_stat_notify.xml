@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Host status-bar icon: white silhouette (system applies notification accent color). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M4,5.5c0,-1.38 1.12,-2.5 2.5,-2.5h6c1.38,0 2.5,1.12 2.5,2.5v6c0,1.38 -1.12,2.5 -2.5,2.5h-6c-1.38,0 -2.5,-1.12 -2.5,-2.5z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillAlpha="0.55"
+        android:pathData="M9,10.5c0,-1.38 1.12,-2.5 2.5,-2.5h6c1.38,0 2.5,1.12 2.5,2.5v6c0,1.38 -1.12,2.5 -2.5,2.5h-6c-1.38,0 -2.5,-1.12 -2.5,-2.5z" />
+</vector>

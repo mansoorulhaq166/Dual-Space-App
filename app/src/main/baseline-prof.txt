@@ -1,0 +1,35 @@
+# Baseline profile — AOT-compiles startup hot paths so the first frame doesn't pay JIT/interpreter
+# cost on cold start (a big win on low-end devices). Packaged into the release APK and applied by
+# ProfileInstaller on API 29+ (so it benefits the Infinix-class devices too).
+#
+# These are broad, hand-authored rules covering our own code + the Compose UI startup stack. For
+# MAXIMUM benefit a profile generated from a Macrobenchmark run is better (see notes); these rules
+# give most of the gain without that setup and are safe (profiles only affect compilation).
+#
+# Flags: H=hot, S=startup, P=post-startup. Wildcards: * within a segment, ** across segments.
+
+# --- Our app (Application, MainActivity, engine adapter, Compose UI, diagnostics) ---
+HSPLcom/example/dual/space/**->**(**)**
+Lcom/example/dual/space/**
+
+# --- Jetpack Compose runtime/ui (the dominant first-frame cost) ---
+HSPLandroidx/compose/runtime/**->**(**)**
+Landroidx/compose/runtime/**
+HSPLandroidx/compose/ui/**->**(**)**
+Landroidx/compose/ui/**
+HSPLandroidx/compose/ui/platform/**->**(**)**
+HSPLandroidx/compose/ui/node/**->**(**)**
+HSPLandroidx/compose/ui/graphics/**->**(**)**
+HSPLandroidx/compose/foundation/**->**(**)**
+Landroidx/compose/foundation/**
+HSPLandroidx/compose/foundation/layout/**->**(**)**
+HSPLandroidx/compose/foundation/lazy/**->**(**)**
+HSPLandroidx/compose/material3/**->**(**)**
+Landroidx/compose/material3/**
+HSPLandroidx/compose/animation/**->**(**)**
+
+# --- Lifecycle / activity-compose / coroutines used during startup ---
+HSPLandroidx/lifecycle/**->**(**)**
+HSPLandroidx/activity/**->**(**)**
+HSPLkotlinx/coroutines/**->**(**)**
+HSPLkotlin/**->**(**)**

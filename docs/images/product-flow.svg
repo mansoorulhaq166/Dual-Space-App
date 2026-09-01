@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="180" viewBox="0 0 920 180" role="img" aria-label="Dual Space product flow">
+  <rect width="920" height="180" fill="#0B1020"/>
+  <text x="40" y="32" fill="#A8B3CF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">How it is used</text>
+
+  <rect x="40" y="52" width="190" height="96" rx="12" fill="#18213A"/>
+  <text x="135" y="92" text-anchor="middle" fill="#8B5CF6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700">1</text>
+  <text x="135" y="114" text-anchor="middle" fill="#F8FAFC" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">Select an app</text>
+  <text x="135" y="134" text-anchor="middle" fill="#A8B3CF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">From the device catalog</text>
+
+  <path d="M238 100 h24" stroke="#38BDF8" stroke-width="2"/>
+  <polygon points="268,100 258,95 258,105" fill="#38BDF8"/>
+
+  <rect x="276" y="52" width="190" height="96" rx="12" fill="#18213A"/>
+  <text x="371" y="92" text-anchor="middle" fill="#8B5CF6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700">2</text>
+  <text x="371" y="114" text-anchor="middle" fill="#F8FAFC" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">Create a space</text>
+  <text x="371" y="134" text-anchor="middle" fill="#A8B3CF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Isolated instance</text>
+
+  <path d="M474 100 h24" stroke="#38BDF8" stroke-width="2"/>
+  <polygon points="504,100 494,95 494,105" fill="#38BDF8"/>
+
+  <rect x="512" y="52" width="190" height="96" rx="12" fill="#18213A"/>
+  <text x="607" y="92" text-anchor="middle" fill="#8B5CF6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700">3</text>
+  <text x="607" y="114" text-anchor="middle" fill="#F8FAFC" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">Launch inside Dual Space</text>
+  <text x="607" y="134" text-anchor="middle" fill="#A8B3CF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Own login and storage</text>
+
+  <path d="M710 100 h24" stroke="#38BDF8" stroke-width="2"/>
+  <polygon points="740,100 730,95 730,105" fill="#38BDF8"/>
+
+  <rect x="748" y="52" width="132" height="96" rx="12" fill="#18213A" stroke="#22D3EE"/>
+  <text x="814" y="102" text-anchor="middle" fill="#F8FAFC" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">Host app</text>
+  <text x="814" y="122" text-anchor="middle" fill="#A8B3CF" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">unchanged</text>
+</svg>

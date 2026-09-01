@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- See other launchable apps so the user can pick one to clone (Android 11+ package visibility). -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <!-- Legacy pinned-shortcut install on Android &lt; 8.0 (ShortcutManagerCompat). -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+
+    <!-- ============================================================================
+         RELEASE PERMISSION HYGIENE (plan A2)
+
+         The engine AAR declares a large permission superset (so sandboxed guest apps can
+         inherit perms). Most are either impossible for a normal app to be granted (system/
+         signature) or banned by Google Play. We strip those from the MERGED manifest here.
+         Removing the impossible ones has ZERO functional impact (they're never granted on a
+         normal install). SMS/Call-Log are kept for sideload so guests like Telegram can verify;
+         strip them again before a Play Store submission.
+
+         Normal, grantable, guest-needed perms (camera, mic, contacts, location, storage,
+         media, phone-state, overlay) are intentionally LEFT so cloned apps keep working.
+         ============================================================================ -->
+
+    <!-- (1) System / signature / privileged — a normal app can never hold these; pure flags. -->
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.DELETE_PACKAGES" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.DEVICE_POWER" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.READ_LOGS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.UPDATE_APP_OPS_STATS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.ACCESS_CACHE_FILESYSTEM" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.READ_INSTALL_SESSIONS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.BIND_APPWIDGET" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.BIND_DIRECTORY_SEARCH" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.HARDWARE_TEST" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.READ_DEVICE_CONFIG" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.READ_PRECISE_PHONE_STATE" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.QUERY_ADVANCED_PROTECTION_MODE" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.GET_INTENT_SENDER_INTENT" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.SET_TIME" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.READ_CELL_BROADCASTS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+
+    <!-- (2) SMS / Call-Log — DualCore also declares these; tools:node="remove" drops them
+         from the merged APK. Temporarily stripped to test Play Protect. Restore by deleting
+         tools:node="remove" if Telegram SMS/call verify is needed. -->
+    <uses-permission android:name="android.permission.READ_SMS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.SEND_SMS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.RECEIVE_MMS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.WRITE_SMS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="com.google.android.gms.permission.READ_CALL_LOG" tools:node="remove" />
+    <uses-permission android:name="com.google.android.gms.permission.WRITE_CALL_LOG" tools:node="remove" />
+    <uses-permission android:name="android.permission.BROADCAST_SMS" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.provider.Telephony.SMS_RECEIVED" tools:node="remove" />
+
+    <!-- (3) Special-access — heavy Play justification, kept removed for a clean Play submission.
+         MANAGE_EXTERNAL_STORAGE (All Files Access) is the Play-sensitive one; instead we request
+         granular media perms below and let guests inherit them. Re-enable (drop tools:node="remove")
+         only if you need full folder browsing for apps that have no granular-media path. -->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" tools:ignore="ProtectedPermissions,PermissionImpliesUnsupportedChromeOsHardware" />
+
+    <!-- (4) Play-safe runtime perms requested on first launch so cloned apps inherit them (the
+         engine reports them granted to guests, same uid). Notifications + granular media (Android 13+),
+         legacy read on <=32. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+
+    <application
+        android:name=".DualSpaceApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DualSpace">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.DualSpace"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Invisible trampoline for home-screen shortcuts.
+             exported=true is required for LEGACY (pre-Android-8 / API 24-25) pinned shortcuts, which
+             the launcher fires directly; ShortcutManager pins on API 26+ are launched by the system on
+             our behalf and work with exported=false. The launch is hardened in code instead:
+             DualCoreEngine.launchClone validates the package is actually a clone before launching, so a
+             third-party caller cannot make the engine launch an arbitrary package. For full lockdown
+             (a third-party app cannot foreground an EXISTING clone either) set exported="false" — the
+             only cost is legacy pinned shortcuts on Android 7. -->
+
+        <activity
+            android:name=".CloneLaunchActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.DualSpace" />
+
+        <activity
+            android:name=".ShortcutLauncherActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- Lets the in-app "Share logs" action hand the diagnostics file to another app. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+</manifest>
